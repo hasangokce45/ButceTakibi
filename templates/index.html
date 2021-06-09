@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Bütçe Takibi Uygulaması</title>
+</head>
+<body>
+    <div style = "margin-top: 50px;" class= "container">
+      <h3>Bütçe</h3><hr>
+      <form>
+        <div class="form-group">
+          <label for="formGroupExampleInput">İşlemin Adı</label>
+          <input type="text" name="islemAdi" class="form-control" id="formGroupExampleInput" placeholder="İşlem adını giriniz" required></div>
+          <div class="form-group">
+          <label for="formGroupExampleInput2">İşlemin Tutarı</label>
+          <input type="number" step="0.01" name="islemTutari" class="form-control" id="formGroupExampleInput2" placeholder="İşlem tutarını giriniz" required></div>
+          <button type="submit" formmethod="post" formaction="/gelirekle" class="btn btn-success">Gelir Ekle</button>
+          <button type="submit" formmethod="post" formaction="/giderekle" class="btn btn-danger">Gider Ekle</button>
+        </form><br>
+
+         <button style = "margin-bottom: 10px;" type="button" onClick="parent.location='/hesapla'" class="btn btn-info">Hesapla</button>
+
+        {% if butcem == [] %}
+        <hr><div class="alert alert-danger" role="alert">Henüz bir geliriniz/gideriniz yok</div> 
+        {% else %}
+        <table class="table">
+          <thead><br>
+            <tr>
+            <th scope="col">Tür</th>
+            <th scope="col">İşlem Adı</th>
+            <th scope="col">İşlem Tutarı</th>
+            <th scope="col">Sil</th>
+            <th> <a href="/hepsinisil"  class="btn btn-danger">Hepsini Sil</a></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for listele in butcem %}
+              <tr>
+              <td>{{listele.tur}}</td>
+              <td>{{listele.adi}}</td>
+              {% if listele.tur == "gider" %}
+              <td>{{--listele.fiyat}} ₺</td>
+              {% else %}
+              <td>{{listele.fiyat}} ₺</td>
+              {% endif %}
+              <td><a href="/sil/{{listele.id}}" class = "btn btn-danger">Sil</a></td>
+              </tr>      
+            {% endfor %}
+          </tbody>
+        </table>
+          <div style = "margin-left: 250px; font-size: 30px;" class="d-inline p-2 bg-dark text-white">Net Bütçe: {{net}} ₺</div>
+        {% endif %}
+    </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
